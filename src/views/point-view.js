@@ -1,7 +1,19 @@
-import { createElement } from '../render.js';
+import View from './view';
+import {html} from '../utils';
+import './point-view.css';
 
-function createTripPointTemplate () {
-  return `<li class="trip-events__item">
+export default class PointView extends View {
+  constructor() {
+    super();
+
+    this.classList.add('trip-events__item');
+  }
+
+  /**
+   * @override
+   */
+  createHtml() {
+    return html`
       <div class="event">
         <time class="event__date" datetime="2019-03-18">MAR 18</time>
         <div class="event__type">
@@ -24,22 +36,14 @@ function createTripPointTemplate () {
             <span class="event__offer-title">Order Uber</span>
             &plus;&euro;&nbsp;
             <span class="event__offer-price">20</span>
-          </li>`;
-}
-
-export default class TripPointView {
-  getTemplate() {
-    return createTripPointTemplate();
-  }
-
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-    return this.element;
-  }
-
-  removeElement() {
-    this.element = null;
+          </li>
+        </ul>
+        <button class="event__rollup-btn" type="button">
+          <span class="visually-hidden">Open event</span>
+        </button>
+      </div>
+    `;
   }
 }
+
+customElements.define(String(PointView), PointView);
