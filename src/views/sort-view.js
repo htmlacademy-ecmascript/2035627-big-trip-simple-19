@@ -1,5 +1,6 @@
 import View from './view';
 import {html} from '../utils';
+import './sort-view.css';
 
 export default class SortView extends View {
   constructor() {
