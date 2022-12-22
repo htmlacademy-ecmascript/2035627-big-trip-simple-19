@@ -1,7 +1,7 @@
 import './views/filter-view';
 import './views/sort-view';
 import './views/point-view';
-import './views/list-view';
+import ListView from './views/list-view';
 import './views/new-point-editor-view';
 
 import Store from './store';
@@ -14,6 +14,9 @@ import OfferGroupAdapter from './adapters/offer-group-adapter';
 
 import { FilterType, SortType } from './enums';
 import {filterCallbackMap, sortCallbackMap} from './maps';
+
+import ListPresenter from './presenters/list-presenter';
+
 
 const BASE = 'https://19.ecmascript.pages.academy/big-trip-simple/';
 const AUTH = 'Basic 7qwerty890';
@@ -49,43 +52,17 @@ const offerGroupsModel = new CollectionModel({
 });
 
 const models = [pointsModel, destinationsModel, offerGroupsModel];
-const {log, table} = console;
+
+const listView = document.querySelector(String(ListView));
 
 Promise.all(
   models.map((model) => model.ready())
 )
   .then(async () => {
-    table(pointsModel.list());
-    // log('Points', pointsModel.listAll());
-    // log('Points: item', pointsModel.item());
-    // log('Points: findById', pointsModel.findBy('basePrice', 300));
-    // log('Points: findIndexById', pointsModel.findIndexById('3'));
-    // log('Destinations', destinationsModel.listAll());
-    // log('Offer groups', offerGroupsModel.listAll());
-     //const logEvent = (event) => log(event.type, event.detail);
-
-    //   pointsModel.addEventListener('add', logEvent);
-     // pointsModel.addEventListener('delete', logEvent);
-
-    //   const item = pointsModel.item();
-
-    //   item.basePrice = 100;
-    //   item.startDate = new Date().toJSON();
-    //   item.endDate = item.startDate;
-    //   item.destinationId = '1';
-    //   item.offerIds = [];
-    //   item.type = 'bus';
-
-    //   const addedItem = await pointsModel.add(item);
-
-    //   addedItem.basePrice = 200;
-    //   addedItem.type = 'taxi';
-  //   log(pointsModel.list())
-  // await pointsModel.delete('5');
-  // log(pointsModel.list());
+    new ListPresenter(listView, models);
   })
 
   .catch((error) => {
-    log(error);
+    console.log(error);
   });
 
