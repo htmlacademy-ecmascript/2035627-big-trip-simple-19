@@ -10,11 +10,14 @@ export default class ListPresenter extends Presenter {
     super(...arguments);
 
     this.updateView();
+    this.pointsModel.addEventListener('filter', this.handlePointsModelFilter.bind(this));
+    this.pointsModel.addEventListener('sort', this.handlePointsModelSort.bind(this));
   }
 
   updateView() {
     const points = this.pointsModel.list();
     const pointViewStates = points.map(this.createPointViewState, this);
+
     this.view.setItems(pointViewStates);
   }
 
@@ -45,5 +48,13 @@ export default class ListPresenter extends Presenter {
       basePrice: formatNumber(point.basePrice),
       offers: offerViewStates
     };
+  }
+
+  handlePointsModelFilter() {
+    this.updateView();
+  }
+
+  handlePointsModelSort() {
+    this.updateView();
   }
 }
