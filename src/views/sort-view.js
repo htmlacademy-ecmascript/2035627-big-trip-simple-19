@@ -14,20 +14,20 @@ export default class SortView extends RadioGroupView {
    */
   createOptionHtml(state) {
     return html`
-  <div
-  class="trip-sort__item  trip-sort__item--${state.value}">
-    <input
-    id="sort-${state.value}"
-    class="trip-sort__input  visually-hidden"
-    type="radio"
-    name="trip-sort"
-     value="${state.value}">
-    <label
-    class="trip-sort__btn"
-    for="${state.value}">
-    ${state.title}</label>
-  </div>
-  `;
+      <div class="trip-sort__item  trip-sort__item--${state.value}">
+        <input
+          id="sort-${state.value}"
+          class="trip-sort__input  visually-hidden"
+          type="radio"
+          name="trip-sort"
+          value="${state.value}">
+        <label
+          class="trip-sort__btn"
+          for="sort-${state.value}">
+          ${state.title}
+        </label>
+      </div>
+    `;
   }
 
   /**
