@@ -9,7 +9,7 @@ export default class NewPointEditorPresenter extends Presenter {
 
     this.view.addEventListener('submit', this.handleViewSubmit.bind(this));
     this.view.addEventListener('reset', this.handleViewReset.bind(this));
-    this.checkPath();
+    this.view.addEventListener('close', this.handleViewClose.bind(this));
   }
 
   /**
@@ -20,7 +20,7 @@ export default class NewPointEditorPresenter extends Presenter {
       this.view.open();
     }
     else {
-      this.view.close();
+      this.view.close(false);
     }
   }
 
@@ -31,15 +31,11 @@ export default class NewPointEditorPresenter extends Presenter {
     event.preventDefault();
   }
 
-  checkPath() {
-    if (this.view.close)
-    {
-      this.navigate('/');
-    }
-  }
-
   handleViewReset() {
     this.view.close();
+  }
+
+  handleViewClose() {
     this.navigate('/');
   }
 }
