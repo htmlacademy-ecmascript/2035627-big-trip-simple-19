@@ -23,12 +23,9 @@ export default class NewPointEditorPresenter extends Presenter {
     this.view.destinationView.setOptions(destinationOptions);
     this.view.destinationView.addEventListener('input', this.handleDestinationViewInput.bind(this));
 
-    this.view.datesView.setConfig({dateFormat: 'd/m/y H:m',
-      // eslint-disable-next-line camelcase
-      time_24hr: true,
-      'locale': {
-        'firstDayOfWeek': 1
-      }
+    this.view.datesView.setConfig({
+      dateFormat: 'd/m/y H:m',
+      locale: {firstDayOfWeek: 1, 'time_24hr': true}
     });
 
     this.view.addEventListener('submit', this.handleViewSubmit.bind(this));

@@ -6,6 +6,7 @@ import DatesView from './common/dates-view';
 import BasePriceView from './common/base-price-view';
 import OffersView from './common/offers-view';
 import DestinationDetailsView from './common/destination-details-view';
+import { saveButtonTextMap } from '../maps';
 
 /**
  * @implements {EventListenerObject}
@@ -92,6 +93,16 @@ export default class NewPointEditorView extends View {
     if (notify) {
       this.dispatchEvent(new CustomEvent('close'));
     }
+  }
+
+  /**
+   *
+   * @param {boolean} flag
+   */
+  awaitSave(flag) {
+    const text = saveButtonTextMap[Number(flag)];
+
+    this.querySelector('.event__save-btn').textContent = text;
   }
 
   /**

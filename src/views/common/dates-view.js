@@ -27,7 +27,7 @@ export default class DatesView extends View {
     super();
 
     this.classList.add('event__field-group', 'event__field-group--time');
-    this.addEventListener('keydown', this.handleKeydown);
+    this.addEventListener('keydown', this.handleKeydown, true);
   }
 
   /**
@@ -50,12 +50,7 @@ export default class DatesView extends View {
     const defaultConfig = {
       allowInput: true,
       enableTime: true,
-      monthSelectorType: 'static',
-      dateFormat: 'd/m/y H:m',
-      time_24hr: true,
-      'locale': {
-        'firstDayOfWeek': 1
-      }
+      monthSelectorType: 'static'
     };
 
     // @ts-ignore
@@ -106,14 +101,13 @@ export default class DatesView extends View {
    * @param {KeyboardEvent} event
    */
   handleKeydown(event) {
-    const calendar = this.querySelector('.flatpickr-calendar');
-    if (event.key === 'Escape' && this.contains(calendar)) {
-      event.stopPropagation();
-      this.destroyCalendars();
+    if (event.key === 'Escape' && (this.#startDateCalendar.isOpen || this.#endDateCalendar.isOpen)) {
+      // FIXME: Закрытие по Esc после выбора даты
+      event.stopImmediatePropagation();
+      this.#startDateCalendar.close();
+      this.#endDateCalendar.close();
     }
-    console.log(this.contains(calendar));
   }
-
 }
 
 customElements.define(String(DatesView), DatesView);
