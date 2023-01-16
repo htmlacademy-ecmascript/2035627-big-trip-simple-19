@@ -6,6 +6,7 @@ import DatesView from './common/dates-view';
 import BasePriceView from './common/base-price-view';
 import OffersView from './common/offers-view';
 import DestinationDetailsView from './common/destination-details-view';
+import { saveButtonTextMap } from '../maps';
 
 /**
  * @implements {EventListenerObject}
@@ -20,6 +21,38 @@ export default class NewPointEditorView extends View {
      * @type {ListView}
      */
     this.listView = listView;
+
+    /**
+     * @type {PointTypeView}
+     */
+    this.pointTypeView = this.querySelector(String(PointTypeView));
+
+    /**
+     * @type {DestinationView}
+     */
+    this.destinationView = this.querySelector(String(DestinationView));
+
+    /**
+     * @type {DatesView}
+     */
+    this.datesView = this.querySelector(String(DatesView));
+
+    /**
+     * @type {BasePriceView}
+     */
+    this.basePriceView = this.querySelector(String(BasePriceView));
+
+    /**
+     * @type {OffersView}
+     */
+    this.offersView = this.querySelector(String(OffersView));
+
+    /**
+     * @type {DestinationDetailsView}
+     */
+    this.destinationDetailsView = this.querySelector(String(DestinationDetailsView));
+
+
   }
 
   /**
@@ -46,16 +79,30 @@ export default class NewPointEditorView extends View {
 
   open() {
     this.listView.prepend(this);
+    this.datesView.createCalendars();
+
     document.addEventListener('keydown', this);
   }
 
   close(notify = true) {
     this.remove();
+    this.datesView.destroyCalendars();
+
     document.removeEventListener('keydown', this);
 
     if (notify) {
       this.dispatchEvent(new CustomEvent('close'));
     }
+  }
+
+  /**
+   *
+   * @param {boolean} flag
+   */
+  awaitSave(flag) {
+    const text = saveButtonTextMap[Number(flag)];
+
+    this.querySelector('.event__save-btn').textContent = text;
   }
 
   /**
