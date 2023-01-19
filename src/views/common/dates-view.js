@@ -48,9 +48,9 @@ export default class DatesView extends View {
    */
   setConfig(config) {
     const defaultConfig = {
-      allowInput: true,
       enableTime: true,
-      monthSelectorType: 'static'
+      monthSelectorType: 'static',
+      static: true
     };
 
     // @ts-ignore
