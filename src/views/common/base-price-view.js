@@ -20,7 +20,7 @@ export default class BasePriceView extends View {
       <input class="event__input  event__input--price"
         id="event-price-1"
         type="number"
-        name="event-price"
+        name="base_price"
         min="1"
         max="1000000">
     `;
