@@ -79,7 +79,11 @@ export default class Store {
    */
   static async assert(response) {
     if (!response.ok) {
-      throw new Error(`${response.status} - ${response.statusText}`);
+      const message = `${response.status} - ${response.statusText}`;
+
+      throw new Error(message, {
+        cause: await response.json()
+      });
     }
   }
 

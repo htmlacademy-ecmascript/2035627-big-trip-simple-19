@@ -7,6 +7,7 @@ import BasePriceView from './common/base-price-view';
 import OffersView from './common/offers-view';
 import DestinationDetailsView from './common/destination-details-view';
 import { saveButtonTextMap } from '../maps';
+import UiBlockerView from './ui-blocker-view';
 
 /**
  * @implements {EventListenerObject}
@@ -52,7 +53,7 @@ export default class NewPointEditorView extends View {
      */
     this.destinationDetailsView = this.querySelector(String(DestinationDetailsView));
 
-
+    this.uiBlockerView = new UiBlockerView();
   }
 
   /**
@@ -60,7 +61,7 @@ export default class NewPointEditorView extends View {
    */
   createHtml() {
     return html`
-      <form class="event event--edit" action="#" method="post">
+      <form class="event event--edit" action="#" method="post" novalidate>
         <header class="event__header">
           <${PointTypeView}></${PointTypeView}>
           <${DestinationView}></${DestinationView}>
@@ -78,6 +79,7 @@ export default class NewPointEditorView extends View {
   }
 
   open() {
+    this.fadeInRight();
     this.listView.prepend(this);
     this.datesView.createCalendars();
 
@@ -95,6 +97,7 @@ export default class NewPointEditorView extends View {
     }
   }
 
+
   /**
    *
    * @param {boolean} flag
@@ -103,6 +106,14 @@ export default class NewPointEditorView extends View {
     const text = saveButtonTextMap[Number(flag)];
 
     this.querySelector('.event__save-btn').textContent = text;
+    this.uiBlockerView.toggle(flag);
+  }
+
+  /**
+   * @param {string} name
+   */
+  findByName(name) {
+    return this.querySelector('form').elements[name];
   }
 
   /**

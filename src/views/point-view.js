@@ -10,7 +10,10 @@ export default class PointView extends View {
     super(state);
 
     this.classList.add('trip-events__item');
+    this.dataset.id = state.id;
     this.setOffers(state.offers);
+
+    this.addEventListener('click', this.handleClick);
   }
 
   /**
@@ -37,7 +40,9 @@ export default class PointView extends View {
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
-
+          <li class="event__offer">
+            <span class="event__offer-title">No additional offers</span>
+          </li>
         </ul>
         <button class="event__rollup-btn" type="button">
           <span class="visually-hidden">Open event</span>
@@ -64,8 +69,18 @@ export default class PointView extends View {
    */
   setOffers(states) {
     const offersHtml = states.map(this.createOfferHtml).join('');
+    if (offersHtml) {
+      this.querySelector('.event__selected-offers').innerHTML = offersHtml;
+    }
+  }
 
-    this.querySelector('.event__selected-offers').innerHTML = offersHtml;
+  /**
+   * @param {MouseEvent & {target: Element}} event
+   */
+  handleClick(event) {
+    if (event.target.closest('.event__rollup-btn')) {
+      this.dispatchEvent(new CustomEvent('edit', {bubbles: true}));
+    }
   }
 }
 

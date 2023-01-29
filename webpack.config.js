@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   entry: './src/main.js',
@@ -25,6 +26,15 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
       }
+    ]
+  },
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          keep_classnames: /View$/
+        }
+      })
     ]
   }
 };
