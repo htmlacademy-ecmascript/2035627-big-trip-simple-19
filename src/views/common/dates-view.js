@@ -102,7 +102,6 @@ export default class DatesView extends View {
    */
   handleKeydown(event) {
     if (event.key === 'Escape' && (this.#startDateCalendar.isOpen || this.#endDateCalendar.isOpen)) {
-      // FIXME: Закрытие по Esc после выбора даты
       event.stopImmediatePropagation();
       this.#startDateCalendar.close();
       this.#endDateCalendar.close();
